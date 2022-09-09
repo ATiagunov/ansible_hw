@@ -1,6 +1,6 @@
 - name: Copy script to {{ groups['debian_cluster'] }}
   copy:
-    src: ~/ansible_hw/mon
+    src: {{ inventory_dir }}/mon
     dest: ~/
     mode: "u=rx"
 
