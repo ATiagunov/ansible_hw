@@ -18,7 +18,7 @@ PS_AR=(${PS})
 done
 OUTPUT="${OUTPUT}</table></body></html>"
 
-MSG="status shift.user18 $STATUS_COLOR `TZ=UTC date +"%a %b %e %H:%M:%S %Z %Y"` - Processes per user
+MSG="status user18.`hostname`_ps $STATUS_COLOR `TZ=UTC date +"%a %b %e %H:%M:%S %Z %Y"` - Processes per user
 $OUTPUT"
 
 ( echo "$MSG"; sleep 1 ) | telnet 192.168.200.3 1984 2>&1 >/dev/null | grep -v "closed by foreign host"
