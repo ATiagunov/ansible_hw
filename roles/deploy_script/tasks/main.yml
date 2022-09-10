@@ -1,11 +1,23 @@
-- name: Copy script to {{ groups['debian_cluster'] }}
+- name: Copy scripts to {{ groups['debian_cluster'] }}
   copy:
     src: "{{ inventory_dir }}/../mon"
     dest: ~/
     mode: "u=rx"
 
 - name: Check response code
-  command: "~/mon/main.sh"
+  command: "{{ item }}"
   changed_when: false
+  loop:
+     - ~/mon/disk_free.sh
+     - ~/mon/num_proc.sh
+  
+- name: Set crontab on active nodes
+  cron:
+      name: "Send {{ item }} output to xymon every minute"
+      minute: "*"
+      job: "{{ item }}"
+  loop:
+     - ~/mon/disk_free.sh
+     - ~/mon/num_proc.sh
 
 
